@@ -44,13 +44,19 @@ void cutForms() {  // create the first picture - the black form the input pacman
 
 		// we have 1 byte from pacman - 1 byte from white image
 		if (!isFinished) {
-			result = inputByte ^ whiteByte;
-			fwrite(&result, 1, 1, black_forms);
+
+			if (inputByte == 0x00) {
+				inputByte ^= whiteByte;
+			}
+			else {
+				inputByte ^= inputByte;
+			}
+
+			fwrite(&inputByte, 1, 1, black_forms);
 				
 			if (feof(pacman_input)) {
 				isFinished = true;
 			}
-
 		}
 	}
 
